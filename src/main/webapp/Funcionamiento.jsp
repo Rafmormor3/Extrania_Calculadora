@@ -65,7 +65,7 @@
 
 %>
     <h1>Calculator</h1>
-	<form method="get" action="Funcionamiento.jsp">
+	<form method="post" action="Funcionamiento.jsp">
         <div>
 		<h3>
             <%=cadena %>
