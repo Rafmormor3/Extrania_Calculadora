@@ -12,6 +12,7 @@
 <body align="center">
 <%! 
 	String cadena="";
+	String resultado="";
 %>
 <%
 	String bot1=request.getParameter("boton1");
@@ -19,32 +20,41 @@
 	String bot3=request.getParameter("boton3");
 
 	if(bot1!=null ){
-		cadena+=request.getParameter("number")+request.getParameter("operator");
+		if(resultado.isEmpty()){
+			cadena+=request.getParameter("number")+request.getParameter("operator");	
+		}else{
+			cadena=resultado;
+			cadena+=request.getParameter("number")+request.getParameter("operator");
+			resultado="";
+		}
 	}
 	
 	if(bot2!=null){
 		
-		if(cadena!=null && !cadena.isEmpty()){
+		Calculos c = new Calculos(cadena);
+		
+		if(cadena!=null && !cadena.isEmpty() && Character.isDigit(cadena.charAt(0)) && c.validar().equals("true")){
 			
-			Calculos c = new Calculos(cadena);
-			cadena=c.operarSimple();	
+			resultado=c.operarSimple();
+			cadena=cadena+" = "+ resultado;	
 		}
 	}
 	
 	if(bot3!=null){
 		cadena="";
+		resultado="";
 	}
 
 %>
 	<form method="get" action="Funcionamiento.jsp">
-		<h1>Extrania Calculadora</h1>
+		<h1>CALCULATOR</h1>
 		<h3>
 			<%=cadena %>
 		</h3><br><br>
 		<label>
-			Introduce el numero: <input type="number" name="number">
+			Introduce a number: <input type="number" step="any" name="number">
 		</label><br><br>
-		Introduce el signo:
+		Introduce the operator:
 		<select name="operator">
 			<option value=""> </option>
 			<option value="+">+</option>
